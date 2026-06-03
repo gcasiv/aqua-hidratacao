@@ -188,6 +188,22 @@ Veja o arquivo [`docs/SETUP.md`](docs/SETUP.md) para o guia completo com:
 
 ---
 
+## 📸 Capturas de Tela
+
+### Dashboard Principal
+
+![Dashboard](README-assets/dashboard.png)
+
+### Histórico de Consumo
+
+![Histórico](README-assets/historico.png)
+
+### Configurações
+
+![Configurações](README-assets/configuracoes.png)
+
+---
+
 ## ♿ Acessibilidade
 
 O AQUA foi desenvolvido seguindo as diretrizes **WCAG 2.1 nível AA**:
