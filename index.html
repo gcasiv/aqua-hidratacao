@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<!--
+  ╔══════════════════════════════════════════════════════════╗
+  ║           AQUA — Lembrete de Hidratação Diária           ║
+  ║  Disciplina: Ferramentas de Desenvolvimento Web          ║
+  ║  Professor: Miguel Carvalho                              ║
+  ║  Trabalho: Escrita e Reflexão                            ║
+  ╚══════════════════════════════════════════════════════════╝
+  
+  Estrutura do documento:
+  ├── <head>      — Meta, fontes, título e link para CSS
+  ├── <body>
+  │   ├── #app                  — Container principal
+  │   │   ├── .sidebar          — Navegação lateral
+  │   │   └── .main-content     — Área de conteúdo
+  │   │       ├── .header       — Cabeçalho com saudação
+  │   │       ├── .hero-card    — Card principal de hidratação
+  │   │       ├── .stats-grid   — Grade de estatísticas
+  │   │       ├── .timeline     — Histórico do dia
+  │   │       └── .footer       — Rodapé
+  └── <script src="script.js">  — Lógica da aplicação
+-->
+
+<head>
+  <!-- ===== CONFIGURAÇÃO BASE ===== -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AQUA - Aplicativo de lembrete de hidratação diária. Registre sua ingestão de água e mantenha hábitos saudáveis." />
+  <meta name="author" content="Trabalho Acadêmico - Ferramentas de Desenvolvimento Web" />
+  <meta name="theme-color" content="#0ea5e9" />
+
+  <!-- ===== TÍTULO DA PÁGINA ===== -->
+  <title>AQUA — Lembrete de Hidratação Diária</title>
+
+  <!-- ===== FONTES DO GOOGLE ===== -->
+  <!-- Sora: Display moderna e elegante para títulos -->
+  <!-- Plus Jakarta Sans: Corpo de texto com excelente legibilidade -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- ===== ÍCONES (Remixicon CDN) ===== -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+    rel="stylesheet"
+  />
+
+  <!-- ===== FOLHA DE ESTILOS PRINCIPAL ===== -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ========================================================
+       #APP — Container raiz da aplicação
+       Utiliza CSS Grid para layout sidebar + conteúdo
+  ======================================================== -->
+  <div id="app">
+
+    <!-- ===================================================
+         SIDEBAR — Navegação lateral
+         Contém logo, menu de navegação e status do usuário
+    =================================================== -->
+    <aside class="sidebar" role="navigation" aria-label="Menu principal">
+
+      <!-- Logo da aplicação -->
+      <div class="sidebar__logo" aria-label="AQUA - Logo">
+        <div class="logo-icon" aria-hidden="true">
+          <i class="ri-water-flash-fill"></i>
+        </div>
+        <span class="logo-text">AQUA</span>
+      </div>
+
+      <!-- Menu de navegação principal -->
+      <nav class="sidebar__nav">
+        <ul role="list">
+          <li>
+            <button
+              class="nav-item active"
+              data-section="dashboard"
+              aria-current="page"
+              aria-label="Ir para Dashboard"
+            >
+              <i class="ri-dashboard-3-line" aria-hidden="true"></i>
+              <span>Dashboard</span>
+            </button>
+          </li>
+          <li>
+            <button
+              class="nav-item"
+              data-section="historico"
+              aria-label="Ver histórico"
+            >
+              <i class="ri-bar-chart-2-line" aria-hidden="true"></i>
+              <span>Histórico</span>
+            </button>
+          </li>
+          <li>
+            <button
+              class="nav-item"
+              data-section="lembretes"
+              aria-label="Configurar lembretes"
+            >
+              <i class="ri-notification-3-line" aria-hidden="true"></i>
+              <span>Lembretes</span>
+            </button>
+          </li>
+          <li>
+            <button
+              class="nav-item"
+              data-section="configuracoes"
+              aria-label="Abrir configurações"
+            >
+              <i class="ri-settings-3-line" aria-hidden="true"></i>
+              <span>Configurações</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Informações do usuário na parte inferior da sidebar -->
+      <div class="sidebar__user">
+        <div class="user-avatar" aria-hidden="true">
+          <i class="ri-user-smile-line"></i>
+        </div>
+        <div class="user-info">
+          <span class="user-name" id="userName">Meu Perfil</span>
+          <span class="user-streak" id="sidebarStreak">🔥 0 dias</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===================================================
+         MAIN CONTENT — Área principal de conteúdo
+    =================================================== -->
+    <main class="main-content" id="mainContent" role="main">
+
+      <!-- ---- HEADER: Saudação e data ---- -->
+      <header class="header">
+        <div class="header__left">
+          <!-- Botão de menu para mobile -->
+          <button
+            class="menu-toggle"
+            id="menuToggle"
+            aria-label="Abrir menu lateral"
+            aria-expanded="false"
+            aria-controls="app"
+          >
+            <i class="ri-menu-line" aria-hidden="true"></i>
+          </button>
+          <div>
+            <h1 class="header__greeting" id="greetingText">Bom dia! 👋</h1>
+            <p class="header__date" id="currentDate" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <!-- Indicador de meta diária no header -->
+        <div class="header__right">
+          <div class="header__goal-badge" aria-label="Meta diária de hidratação">
+            <i class="ri-drop-line" aria-hidden="true"></i>
+            <span id="headerGoalDisplay">Meta: 8 copos</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- ---- SEÇÃO: Dashboard (visível por padrão) ---- -->
+      <section class="section" id="sectionDashboard" aria-label="Dashboard de hidratação">
+
+        <!-- ==== HERO CARD: Card principal com anel de progresso ==== -->
+        <div class="hero-card" role="region" aria-label="Progresso de hidratação hoje">
+
+          <!-- Informações de texto do hero -->
+          <div class="hero-card__info">
+            <p class="hero-card__label">Hoje você bebeu</p>
+            <div class="hero-card__count" aria-live="polite" aria-atomic="true">
+              <span class="count-number" id="glassCount">0</span>
+              <span class="count-unit">copos</span>
+            </div>
+            <p class="hero-card__volume" id="totalVolume" aria-live="polite">
+              0 ml de 2.000 ml
+            </p>
+            <!-- Mensagem motivacional dinâmica -->
+            <p class="hero-card__message" id="motivationalMessage" aria-live="polite">
+              Vamos começar sua hidratação! 💧
+            </p>
+          </div>
+
+          <!-- Anel SVG de progresso circular -->
+          <div class="hero-card__ring" aria-hidden="true">
+            <svg
+              class="progress-ring"
+              viewBox="0 0 200 200"
+              width="200"
+              height="200"
+              role="img"
+              aria-label="Anel de progresso"
+            >
+              <!-- Trilha de fundo do anel -->
+              <circle
+                class="progress-ring__track"
+                cx="100" cy="100" r="80"
+                fill="none"
+                stroke-width="12"
+              />
+              <!-- Anel de progresso animado -->
+              <circle
+                class="progress-ring__fill"
+                id="progressRing"
+                cx="100" cy="100" r="80"
+                fill="none"
+                stroke-width="12"
+                stroke-linecap="round"
+                stroke-dasharray="502"
+                stroke-dashoffset="502"
+                transform="rotate(-90 100 100)"
+              />
+            </svg>
+            <!-- Percentual exibido dentro do anel -->
+            <div class="ring-center">
+              <span class="ring-percentage" id="ringPercentage">0%</span>
+              <span class="ring-label">da meta</span>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <!-- ==== BOTÕES DE AÇÃO RÁPIDA ==== -->
+        <div class="action-buttons" role="group" aria-label="Ações rápidas de hidratação">
+          <p class="action-buttons__label">Adicionar:</p>
+          <div class="action-buttons__grid">
+
+            <!-- Botão: 1 copo (250ml) -->
+            <button
+              class="btn-water btn-water--primary"
+              id="btnAddGlass"
+              data-amount="250"
+              aria-label="Adicionar 1 copo de 250ml"
+            >
+              <i class="ri-cup-line" aria-hidden="true"></i>
+              <span class="btn-water__amount">250ml</span>
+              <span class="btn-water__label">1 copo</span>
+            </button>
+
+            <!-- Botão: Garrafa pequena (500ml) -->
+            <button
+              class="btn-water btn-water--secondary"
+              data-amount="500"
+              aria-label="Adicionar garrafa de 500ml"
+            >
+              <i class="ri-drop-fill" aria-hidden="true"></i>
+              <span class="btn-water__amount">500ml</span>
+              <span class="btn-water__label">garrafa P</span>
+            </button>
+
+            <!-- Botão: Garrafa grande (750ml) -->
+            <button
+              class="btn-water btn-water--secondary"
+              data-amount="750"
+              aria-label="Adicionar garrafa de 750ml"
+            >
+              <i class="ri-drop-fill" aria-hidden="true"></i>
+              <span class="btn-water__amount">750ml</span>
+              <span class="btn-water__label">garrafa M</span>
+            </button>
+
+            <!-- Botão: Desfazer último registro -->
+            <button
+              class="btn-water btn-water--undo"
+              id="btnUndo"
+              aria-label="Desfazer último registro"
+              disabled
+            >
+              <i class="ri-arrow-go-back-line" aria-hidden="true"></i>
+              <span class="btn-water__amount">Desfazer</span>
+              <span class="btn-water__label">último</span>
+            </button>
+          </div>
+        </div>
+
+        <br>
+
+        <!-- ==== GRADE DE ESTATÍSTICAS ==== -->
+        <div class="stats-grid" role="region" aria-label="Estatísticas de hidratação">
+
+          <!-- Card: Streak de dias consecutivos -->
+          <div class="stat-card" aria-label="Sequência de dias com meta atingida">
+            <div class="stat-card__icon stat-card__icon--fire" aria-hidden="true">
+              <i class="ri-fire-line"></i>
+            </div>
+            <div class="stat-card__content">
+              <span class="stat-card__value" id="streakValue">0</span>
+              <span class="stat-card__label">dias seguidos</span>
+            </div>
+          </div>
+
+          <!-- Card: Média semanal -->
+          <div class="stat-card" aria-label="Média de copos na semana">
+            <div class="stat-card__icon stat-card__icon--chart" aria-hidden="true">
+              <i class="ri-line-chart-line"></i>
+            </div>
+            <div class="stat-card__content">
+              <span class="stat-card__value" id="weeklyAvg">0</span>
+              <span class="stat-card__label">média semanal</span>
+            </div>
+          </div>
+
+          <!-- Card: Total da semana em litros -->
+          <div class="stat-card" aria-label="Total de litros bebidos na semana">
+            <div class="stat-card__icon stat-card__icon--drop" aria-hidden="true">
+              <i class="ri-water-percent-line"></i>
+            </div>
+            <div class="stat-card__content">
+              <span class="stat-card__value" id="weeklyTotal">0L</span>
+              <span class="stat-card__label">esta semana</span>
+            </div>
+          </div>
+
+          <!-- Card: Melhor dia (recorde) -->
+          <div class="stat-card" aria-label="Melhor dia registrado">
+            <div class="stat-card__icon stat-card__icon--star" aria-hidden="true">
+              <i class="ri-star-line"></i>
+            </div>
+            <div class="stat-card__content">
+              <span class="stat-card__value" id="bestDay">0</span>
+              <span class="stat-card__label">melhor dia</span>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        
+        <!-- ==== TIMELINE: Histórico de registros do dia atual ==== -->
+        <div class="timeline-section" role="region" aria-label="Histórico de registros de hoje">
+          <div class="timeline-section__header">
+            <h2 class="timeline-section__title">
+              <i class="ri-time-line" aria-hidden="true"></i>
+              Registros de hoje
+            </h2>
+            <!-- Botão para limpar apenas o histórico do dia -->
+            <button
+              class="btn-clear"
+              id="btnClearDay"
+              aria-label="Limpar todos os registros de hoje"
+            >
+              <i class="ri-delete-bin-line" aria-hidden="true"></i>
+              Limpar dia
+            </button>
+          </div>
+
+          <!-- Lista de registros — preenchida dinamicamente pelo JS -->
+          <ul class="timeline" id="timelineList" aria-live="polite" aria-label="Lista de registros do dia">
+            <!-- Estado vazio (exibido quando não há registros) -->
+            <li class="timeline-empty" id="timelineEmpty" role="status">
+              <i class="ri-drop-line" aria-hidden="true"></i>
+              <p>Nenhum registro ainda.</p>
+              <p>Beba um copo e comece agora! 💧</p>
+            </li>
+          </ul>
+        </div>
+
+      </section>
+      <!-- Fim da seção Dashboard -->
+
+      <!-- ---- SEÇÃO: Histórico semanal ---- -->
+      <section
+        class="section section--hidden"
+        id="sectionHistorico"
+        aria-label="Histórico semanal"
+      >
+        <div class="section-header">
+          <h2>Histórico da Semana</h2>
+          <p>Acompanhe sua evolução nos últimos 7 dias</p>
+        </div>
+
+        <!-- Barras de progresso do gráfico semanal -->
+        <div class="weekly-chart" role="img" aria-label="Gráfico de barras — hidratação semanal">
+          <div class="weekly-chart__bars" id="weeklyBars" aria-hidden="true"></div>
+          <div class="weekly-chart__labels" id="weeklyLabels"></div>
+        </div>
+      </section>
+
+      <!-- ---- SEÇÃO: Configurações de lembretes ---- -->
+      <section
+        class="section section--hidden"
+        id="sectionLembretes"
+        aria-label="Configurações de lembretes"
+      >
+        <div class="section-header">
+          <h2>Lembretes</h2>
+          <p>Configure seus avisos de hidratação</p>
+        </div>
+
+        <div class="reminder-config card-panel">
+          <div class="reminder-config__item">
+            <label for="reminderToggle" class="toggle-label">
+              <i class="ri-notification-3-line" aria-hidden="true"></i>
+              Ativar lembretes
+            </label>
+            <div class="toggle-switch">
+              <input
+                type="checkbox"
+                id="reminderToggle"
+                role="switch"
+                aria-checked="false"
+              />
+              <span class="toggle-knob" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <div class="reminder-config__item">
+            <label for="reminderInterval" class="toggle-label">
+              <i class="ri-time-line" aria-hidden="true"></i>
+              Intervalo (minutos)
+            </label>
+            <select
+              id="reminderInterval"
+              class="select-input"
+              aria-label="Selecionar intervalo entre lembretes"
+            >
+              <option value="30">30 minutos</option>
+              <option value="60" selected>1 hora</option>
+              <option value="90">1h 30min</option>
+              <option value="120">2 horas</option>
+            </select>
+          </div>
+
+          <p class="reminder-note" id="reminderStatus" aria-live="polite">
+            Os lembretes aparecerão como notificações nesta página enquanto ela estiver aberta.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---- SEÇÃO: Configurações gerais ---- -->
+      <section
+        class="section section--hidden"
+        id="sectionConfiguracoes"
+        aria-label="Configurações gerais"
+      >
+        <div class="section-header">
+          <h2>Configurações</h2>
+          <p>Personalize sua experiência</p>
+        </div>
+
+        <div class="config-grid">
+
+          <!-- Configuração: Meta diária -->
+          <div class="card-panel">
+            <h3 class="card-panel__title">
+              <i class="ri-flag-line" aria-hidden="true"></i>
+              Meta diária
+            </h3>
+            <div class="config-row">
+              <label for="dailyGoal" class="config-label">
+                Número de copos (250ml cada)
+              </label>
+              <div class="config-input-group">
+                <button
+                  class="input-stepper"
+                  data-target="dailyGoal"
+                  data-action="decrease"
+                  aria-label="Diminuir meta"
+                >−</button>
+                <input
+                  type="number"
+                  id="dailyGoal"
+                  class="number-input"
+                  value="8"
+                  min="4"
+                  max="20"
+                  aria-label="Meta diária em copos"
+                />
+                <button
+                  class="input-stepper"
+                  data-target="dailyGoal"
+                  data-action="increase"
+                  aria-label="Aumentar meta"
+                >+</button>
+              </div>
+            </div>
+            <button class="btn-save" id="btnSaveGoal" aria-label="Salvar meta diária">
+              <i class="ri-save-line" aria-hidden="true"></i>
+              Salvar meta
+            </button>
+          </div>
+
+          <!-- Configuração: Nome do usuário -->
+          <div class="card-panel">
+            <h3 class="card-panel__title">
+              <i class="ri-user-line" aria-hidden="true"></i>
+              Seu nome
+            </h3>
+            <div class="config-row">
+              <label for="userNameInput" class="config-label">
+                Como devo te chamar?
+              </label>
+              <input
+                type="text"
+                id="userNameInput"
+                class="text-input"
+                placeholder="Seu nome aqui..."
+                maxlength="30"
+                aria-label="Digite seu nome"
+              />
+            </div>
+            <button class="btn-save" id="btnSaveName" aria-label="Salvar nome">
+              <i class="ri-save-line" aria-hidden="true"></i>
+              Salvar nome
+            </button>
+          </div>
+
+          <!-- Configuração: Resetar dados -->
+          <div class="card-panel card-panel--danger">
+            <h3 class="card-panel__title">
+              <i class="ri-alert-line" aria-hidden="true"></i>
+              Zona de perigo
+            </h3>
+            <p class="danger-text">
+              Esta ação irá apagar todos os dados salvos, incluindo histórico e configurações.
+            </p>
+            <button
+              class="btn-danger"
+              id="btnResetAll"
+              aria-label="Resetar todos os dados do aplicativo"
+            >
+              <i class="ri-delete-bin-2-line" aria-hidden="true"></i>
+              Resetar tudo
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+    <!-- Fim do main-content -->
+
+  </div>
+  <!-- Fim do #app -->
+
+  <!-- ===================================================
+       TOAST NOTIFICATION — Mensagem flutuante de feedback
+       Exibida dinamicamente pelo JavaScript
+  =================================================== -->
+  <div
+    class="toast"
+    id="toastNotification"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    aria-hidden="true"
+  >
+    <i class="ri-check-line toast__icon" aria-hidden="true"></i>
+    <span class="toast__message" id="toastMessage">Copo registrado!</span>
+  </div>
+
+  <!-- ===================================================
+       MODAL DE CONFIRMAÇÃO — Para ações destrutivas
+  =================================================== -->
+  <div
+    class="modal-overlay"
+    id="confirmModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalTitle"
+    aria-hidden="true"
+  >
+    <div class="modal">
+      <div class="modal__icon" aria-hidden="true">
+        <i class="ri-alert-line"></i>
+      </div>
+      <h3 class="modal__title" id="modalTitle">Confirmar ação</h3>
+      <p class="modal__text" id="modalText">Tem certeza?</p>
+      <div class="modal__actions">
+        <button class="btn-modal-cancel" id="btnModalCancel" aria-label="Cancelar">
+          Cancelar
+        </button>
+        <button class="btn-modal-confirm" id="btnModalConfirm" aria-label="Confirmar">
+          Confirmar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       SCRIPT PRINCIPAL DA APLICAÇÃO
+       Carregado no final do body para garantir que o
+       DOM esteja totalmente carregado antes da execução
+  =================================================== -->
+  <script src="script.js"></script>
+
+</body>
+</html>
