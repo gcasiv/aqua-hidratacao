@@ -190,17 +190,17 @@ Veja o arquivo [`docs/SETUP.md`](docs/SETUP.md) para o guia completo com:
 
 ## 📸 Capturas de Tela
 
-### Dashboard Principal
+<p align="center">
+  <img src="README-assets/dashboard.png" alt="Dashboard" width="30%">
+  <img src="README-assets/historico.png" alt="Histórico" width="30%">
+  <img src="README-assets/configuracoes.png" alt="Configurações" width="30%">
+</p>
 
-![Dashboard](README-assets/dashboard.png)
-
-### Histórico de Consumo
-
-![Histórico](README-assets/historico.png)
-
-### Configurações
-
-![Configurações](README-assets/configuracoes.png)
+<p align="center">
+  <b>Dashboard</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <b>Histórico</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <b>Configurações</b>
+</p>
 
 ---
 
