@@ -141,7 +141,7 @@ aqua-hidratacao/
 │   └── UI-UX.md        # Documentação de design UI/UX
 │
 ├── pdf/
-│   ├── PDF-ferramentas e desenvolvimento da web.pdf        # Guia de inicialização do professor
+│   └── ferramentas e desenvolvimento da web.pdf      # Guia de inicialização do professor
 |
 └── README.md           # Este arquivo
 ```
@@ -314,10 +314,6 @@ Este projeto foi desenvolvido como atividade acadêmica com o objetivo de aplica
 - Boas práticas de programação
 
 ---
-
-<p align="center">
-  💧 Desenvolvido pela equipe AQUA
-</p>
 
 
 <p align="center">
