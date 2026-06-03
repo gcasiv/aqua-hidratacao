@@ -278,13 +278,43 @@ Com base no **Texto 2** (Fórum Econômico Mundial), o AQUA exercita:
 
 ---
 
-## 👤 Autor
+## 👥 Equipe do Projeto
 
 Trabalho acadêmico desenvolvido para a disciplina **Ferramentas de Desenvolvimento Web**.
 
-> *"O analfabeto do século 21 não será aquele que não consegue ler e escrever, mas aquele que não consegue aprender, desaprender e reaprender."*  
-> — **Alvin Toffler**
+### Integrantes
 
+| Nome | Matrícula | Função |
+|--------|------------|---------|
+| **Roni da Silva Casanova** | **25202476** | Autor principal do projeto |
+| **Gustavo da Silva Casanova** | **25103371** | colaboração técnica |
+| **Guilherme da Silva Casanova** | **25103448** | colaboração técnica |
+
+### Informações Acadêmicas
+
+- **Projeto:** AQUA — Lembrete de Hidratação Diária
+- **Disciplina:** Ferramentas de Desenvolvimento Web
+- **Professor:** Miguel Carvalho
+- **Instituição:** UNISUAM
+
+---
+
+### Créditos
+
+Este projeto foi desenvolvido como atividade acadêmica com o objetivo de aplicar conhecimentos em:
+
+- Desenvolvimento Web com HTML, CSS e JavaScript
+- Experiência do Usuário (UX)
+- Acessibilidade Digital
+- Responsividade
+- Organização e documentação de software
+- Boas práticas de programação
+
+---
+
+<p align="center">
+  💧 Desenvolvido pela equipe AQUA
+</p>
 ---
 
 <p align="center">
