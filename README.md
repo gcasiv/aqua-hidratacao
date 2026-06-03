@@ -64,21 +64,21 @@ Referência estudada: [Ideia, Criatividade, Invenção, Inovação e Difusão](h
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  💧 AQUA          Dashboard                             │
+│ AQUA          Dashboard                                 │
 ├──────────┬──────────────────────────────────────────────┤
-│          │  Bom dia! 🌅                                 │
+│          │  Bom dia!                                    │
 │ Dashboard│  terça-feira, 10 de junho de 2025            │
 │          │                                              │
 │ Histórico│  ┌────────────────────────────────────────┐  │
-│          │  │  Hoje você bebeu   [  Anel 65%  ]      │  │
+│          │  │  Hoje você bebeu   [  Anel 65% ]       │  │
 │ Lembretes│  │       5            [   ████    ]       │  │
 │          │  │     copos          [  65% da   ]       │  │
 │ Configur.│  │  1.250ml/2.000ml   [   meta    ]       │  │
 │          │  └────────────────────────────────────────┘  │
-│ 👤 Perfil│                                              │
-│ 🔥 3 dias│  [+250ml] [+500ml] [+750ml] [Desfazer]      │
+│  Perfil  │                                              │
+│ 3 dias   │  [+250ml] [+500ml] [+750ml] [Desfazer]       │
 │          │                                              │
-│          │  🔥 3 dias  📊 5 média  💧 8.5L  ⭐ 8 melhor │
+│          │  3 dias  5 média  8.5L  8 melhor             │
 └──────────┴──────────────────────────────────────────────┘
 ```
 
@@ -140,6 +140,9 @@ aqua-hidratacao/
 │   ├── SETUP.md        # Guia de inicialização e deploy
 │   └── UI-UX.md        # Documentação de design UI/UX
 │
+├── pdf/
+│   ├── PDF-ferramentas e desenvolvimento da web.pdf        # Guia de inicialização do professor
+|
 └── README.md           # Este arquivo
 ```
 
@@ -266,7 +269,7 @@ function renderProgressRing() {
 
 Com base no **Texto 2** (Fórum Econômico Mundial), o AQUA exercita:
 
-| # | Habilidade | Como o projeto a pratica |
+| # | Habilidade | Como o projeto é na prática |
 |---|-----------|--------------------------|
 | 2 | **Pensamento analítico e inovação** | Identificar um problema real e propor solução digital |
 | 3 | **Criatividade, originalidade e iniciativa** | Design diferenciado; solução autoral |
@@ -315,7 +318,7 @@ Este projeto foi desenvolvido como atividade acadêmica com o objetivo de aplica
 <p align="center">
   💧 Desenvolvido pela equipe AQUA
 </p>
----
+
 
 <p align="center">
   Feito com 💧 e muito carinho para a disciplina de Ferramentas de Desenvolvimento Web
